@@ -34,3 +34,6 @@ HEADERS  += mainwindow.h \
     python_engine.h
 
 FORMS    += mainwindow.ui
+
+DISTFILES += \
+    nwpc-sms-collector/sms_collector.py
