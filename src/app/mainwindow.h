@@ -1,6 +1,7 @@
 #pragma once
 #include <QMainWindow>
 #include <QPointer>
+#include <QSharedPointer>
 
 QT_BEGIN_NAMESPACE
 class QTimer;
@@ -34,5 +35,5 @@ private:
     QPointer<QTimer> timer_;
     float timer_interval_msec_;
 
-    QPointer<PythonEnv::PythonEngine> python_engine_;
+    QSharedPointer<PythonEnv::PythonEngine> python_engine_;
 };

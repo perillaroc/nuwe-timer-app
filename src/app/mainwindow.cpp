@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     thread_pool_{new QThreadPool{this}},
     timer_{new QTimer{this}},
     timer_interval_msec_{1000},
-    python_engine_{new PythonEnv::PythonEngine{this}}
+    python_engine_{QSharedPointer<PythonEnv::PythonEngine>{new PythonEnv::PythonEngine{this}}}
 {
     ui->setupUi(this);
 
@@ -41,6 +41,7 @@ void MainWindow::start()
 void MainWindow::checkTaskList()
 {
     qDebug()<<"checkTaskList"<<QDateTime::currentDateTime();
-    CheckTask *task = new CheckTask;
-    thread_pool_->start(task);
+    CheckTask *task = new CheckTask{python_engine_};
+    CheckTaskRunner *runner = new CheckTaskRunner{task};
+    runner->run();
 }
