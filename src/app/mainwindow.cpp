@@ -4,8 +4,6 @@
 #include "check_task.h"
 #include "python_engine.h"
 
-
-#include <QThreadPool>
 #include <QTimer>
 #include <QDatetime>
 #include <QtDebug>
@@ -13,7 +11,6 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow{parent},
     ui{new Ui::MainWindow},
-    thread_pool_{new QThreadPool{this}},
     timer_{new QTimer{this}},
     timer_interval_msec_{1000},
     python_engine_{QSharedPointer<PythonEnv::PythonEngine>{new PythonEnv::PythonEngine{this}}}
@@ -42,6 +39,5 @@ void MainWindow::checkTaskList()
 {
     qDebug()<<"checkTaskList"<<QDateTime::currentDateTime();
     CheckTask *task = new CheckTask{python_engine_};
-    CheckTaskRunner *runner = new CheckTaskRunner{task};
-    runner->run();
+    task->run();
 }

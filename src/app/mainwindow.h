@@ -5,7 +5,6 @@
 
 QT_BEGIN_NAMESPACE
 class QTimer;
-class QThreadPool;
 QT_END_NAMESPACE
 
 namespace PythonEnv{
@@ -31,7 +30,6 @@ private:
 
     Ui::MainWindow *ui;
 
-    QPointer<QThreadPool> thread_pool_;
     QPointer<QTimer> timer_;
     float timer_interval_msec_;
 

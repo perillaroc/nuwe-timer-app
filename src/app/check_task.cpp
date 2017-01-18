@@ -52,7 +52,7 @@ void CheckTask::run()
         qDebug()<<str;
     });
 
-    QFuture<void> future = python_engine_->executePythonScript(
+    python_engine_->executePythonScript(
         command,
         QApplication::applicationDirPath()+"\\nwpc-sms-collector\\sms_collector.py",
         arguments
