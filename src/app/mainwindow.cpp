@@ -22,7 +22,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     timer_->setInterval(timer_interval_msec_);
     connect(timer_, &QTimer::timeout, this, &MainWindow::checkTaskList);
-    start();
+
+    ui->timer_switch_pushbutton->setChecked(true);
 }
 
 MainWindow::~MainWindow()
@@ -30,14 +31,39 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::start()
+void MainWindow::startTimer()
 {
     timer_->start();
 }
 
+void MainWindow::stopTimer()
+{
+    timer_->stop();
+}
+
+void MainWindow::on_timer_switch_pushbutton_toggled(bool checked)
+{
+    if(checked)
+    {
+        startTimer();
+        ui->timer_switch_pushbutton->setText("Stop Timer");
+    }
+    else
+    {
+        stopTimer();
+        ui->timer_switch_pushbutton->setText("Start Timer");
+    }
+}
+
 void MainWindow::checkTaskList()
 {
-    qDebug()<<"checkTaskList"<<QDateTime::currentDateTime();
-    CheckTask *task = new CheckTask{python_engine_};
-    task->run();
+    QDateTime current_date_time = QDateTime::currentDateTime();
+    qDebug()<<"[MainWindow::checkTaskList]"<<current_date_time;
+    if(current_date_time.time().second()%10 == 0)
+    {
+        CheckTask *task = new CheckTask{python_engine_};
+        task->run();
+    }
 }
+
+

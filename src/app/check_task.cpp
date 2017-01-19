@@ -17,12 +17,12 @@ CheckTask::CheckTask(QSharedPointer<PythonEnv::PythonEngine> python_engine, QObj
 
 CheckTask::~CheckTask()
 {
-    qDebug()<<"CheckTask delete";
+//    qDebug()<<"CheckTask delete";
 }
 
 void CheckTask::run()
 {
-    qDebug()<<"CheckTask::run check task";
+//    qDebug()<<"CheckTask::run check task";
 
     QStringList arguments;
     arguments<<"variable";
@@ -39,7 +39,7 @@ void CheckTask::run()
 
     connect(command, &PythonCommand::signalFinished,
             [=](){
-        qDebug()<<"command finished";
+//        qDebug()<<"command finished";
     });
 
     connect(command, &PythonCommand::signalStdOutString,

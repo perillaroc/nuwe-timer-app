@@ -23,7 +23,11 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    void start();
+    void startTimer();
+    void stopTimer();
+
+private slots:
+    void on_timer_switch_pushbutton_toggled(bool checked);
 
 private:
     void checkTaskList();
