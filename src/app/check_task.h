@@ -21,16 +21,3 @@ private:
     QSharedPointer<PythonEnv::PythonEngine> python_engine_;
 
 };
-
-class CheckTaskRunner: public QRunnable
-{
-public:
-    CheckTaskRunner(QPointer<CheckTask> check_task);
-    ~CheckTaskRunner();
-
-    void run();
-private:
-    QPointer<CheckTask> check_task_;
-};
-
-

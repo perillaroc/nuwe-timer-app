@@ -59,18 +59,3 @@ void CheckTask::run()
     );
 
 }
-
-CheckTaskRunner::CheckTaskRunner(QPointer<CheckTask> check_task)
-{
-    check_task_ = check_task;
-}
-
-CheckTaskRunner::~CheckTaskRunner()
-{
-
-}
-
-void CheckTaskRunner::run()
-{
-    check_task_->run();
-}
