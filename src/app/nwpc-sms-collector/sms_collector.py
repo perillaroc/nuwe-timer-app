@@ -2,6 +2,10 @@ import argparse
 import datetime
 from paramiko import SSHClient, AutoAddPolicy
 import json
+import os
+import sys
+sys.path.append(os.path.dirname(__file__))
+from sms_node_variable import get_sms_node_from_cdp_output
 
 
 def variable_handler(args):
@@ -26,26 +30,46 @@ def variable_handler(args):
     std_error_out_string = stderr.read().decode('UTF-8')
     client.close()
 
-    result = {
-        'app': 'nwpc-sms-collector',
-        'type': 'sms_collector',
-        'data': {
-            'request': {
-                'command': 'variable',
-                'arguments': [],
-                'time': request_time_string
-            },
-            'response': {
-                'message': {
-                    'output': std_out_string,
-                    'error_output': std_error_out_string
+    cdp_output = std_out_string.splitlines(True)
+    node = get_sms_node_from_cdp_output(cdp_output)
+    if node is None:
+        result = {
+            'app': 'nwpc-sms-collector',
+            'type': 'sms_collector',
+            'error': 'variable-handler-error',
+            'data': {
+                'request': {
+                    'command': 'variable',
+                    'arguments': [],
+                    'time': request_time_string
                 },
-                'time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                'response': {
+                    'message': {
+                        'output': std_out_string,
+                        'error_output': std_error_out_string
+                    },
+                    'time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                }
             }
         }
-    }
-    print(std_out_string)
-    print(json.dumps(result, indent=2))
+        print(json.dumps(result, indent=2))
+    else:
+        result = {
+            'app': 'nwpc-sms-collector',
+            'type': 'sms_collector',
+            'data': {
+                'request': {
+                    'command': 'variable',
+                    'arguments': [],
+                    'time': request_time_string
+                },
+                'response': {
+                    'node': node.to_dict(),
+                    'time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                }
+            }
+        }
+        print(json.dumps(result, indent=2))
     return
 
 
