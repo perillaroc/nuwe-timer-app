@@ -1,6 +1,6 @@
 class SmsNodeVariableType(object):
-    Variable = 0
-    GeneratedVariable = 1
+    Variable = 'var'
+    GeneratedVariable = 'genvar'
 
 
 class SmsNodeVariable(object):
@@ -8,6 +8,13 @@ class SmsNodeVariable(object):
         self.name = name
         self.variable_type = variable_type
         self.value = value
+
+    def to_dict(self):
+        return {
+            'name': self.name,
+            'variable_type': self.variable_type,
+            'value': self.value
+        }
 
 
 class SmsNode(object):
@@ -17,6 +24,31 @@ class SmsNode(object):
         self.name = ''
         self.status = None
         self.node_type = None
+
+    def to_dict(self):
+        return {
+            'name': self.name,
+            'status': self.status,
+            'node_type': self.node_type,
+            'variable_list': [var.to_dict() for var in self.variable_list],
+            'generated_variable_list': [var.to_dict() for var in self.generated_variable_list]
+        }
+
+    def get_variable(self, variable_name):
+        for var in self.variable_list:
+            if var.name == variable_name:
+                return var
+        for var in self.generated_variable_list:
+            if var.name == variable_name:
+                return var
+        return None
+
+    def get_variable_value(self, variable_name):
+        var = self.get_variable(variable_name)
+        if var is None:
+            return None
+        else:
+            return var.value
 
 
 def get_sms_node_from_cdp_output(cdp_output):
@@ -78,7 +110,7 @@ def get_sms_node_from_cdp_output(cdp_output):
                 continue
             variable_name = line[9:index]
             variable_value = line[index+1:]
-            if variable_value[0] == '\'' and variable_value[-1]=='\'':
+            if variable_value[0] == '\'' and variable_value[-1] == '\'':
                 variable_value = variable_value[1:-1]
             variable = SmsNodeVariable(
                 SmsNodeVariableType.GeneratedVariable,
