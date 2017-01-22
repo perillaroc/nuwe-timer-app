@@ -26,7 +26,7 @@ void CheckTask::run()
 
     QStringList arguments;
     arguments<<"variable";
-    arguments<<"--host=uranus-bk.hpc.nmic.cn";
+    arguments<<"--host=10.20.49.131";
     arguments<<"--port=22";
     arguments<<"--user=nwp";
     arguments<<"--password=nwpop";
@@ -58,4 +58,5 @@ void CheckTask::run()
         arguments
     );
 
+    this->deleteLater();
 }
