@@ -16,13 +16,21 @@ class CORESHARED_EXPORT SmsTask : public Task
 {
     Q_OBJECT
 public:
-    SmsTask(QSharedPointer<PythonEnv::PythonEngine> python_engine, QObject *parent=nullptr);
+    SmsTask(
+            QSharedPointer<PythonEnv::PythonEngine> python_engine,
+            const QString &python_script_path,
+            const QStringList &arguments,
+            QObject *parent=nullptr
+            );
     ~SmsTask();
 
     void run();
 
 private:
     QSharedPointer<PythonEnv::PythonEngine> python_engine_;
+
+    QString python_script_path_;
+    QStringList arguments_;
 
 };
 

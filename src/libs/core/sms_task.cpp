@@ -9,38 +9,28 @@
 using namespace PythonEnv;
 using namespace NuweTimer::Core;
 
-SmsTask::SmsTask(QSharedPointer<PythonEnv::PythonEngine> python_engine, QObject *parent):
+SmsTask::SmsTask(QSharedPointer<PythonEnv::PythonEngine> python_engine, const QString &python_script_path, const QStringList &arguments, QObject *parent):
     Task{parent},
-    python_engine_{python_engine}
+    python_engine_{python_engine},
+    python_script_path_{python_script_path},
+    arguments_{arguments}
 {
-
 }
 
 SmsTask::~SmsTask()
 {
-//    qDebug()<<"CheckTask delete";
+    //    qDebug()<<"CheckTask delete";
 }
 
 void SmsTask::run()
 {
-//    qDebug()<<"CheckTask::run check task";
-
-    QStringList arguments;
-    arguments<<"variable";
-    arguments<<"--host=10.20.49.131";
-    arguments<<"--port=22";
-    arguments<<"--user=nwp";
-    arguments<<"--password=nwpop";
-    arguments<<"--sms-server=nwpc_op";
-    arguments<<"--sms-user=nwp";
-    arguments<<"--sms-password=1";
-    arguments<<"--node-path=/grapes_meso_v4_1";
+    //    qDebug()<<"CheckTask::run check task";
 
     PythonCommand* command = new PythonCommand;
 
     connect(command, &PythonCommand::signalFinished,
             [=](){
-//        qDebug()<<"command finished";
+        //        qDebug()<<"command finished";
     });
 
     connect(command, &PythonCommand::signalStdOutString,
@@ -55,8 +45,8 @@ void SmsTask::run()
 
     python_engine_->executePythonScript(
         command,
-        QApplication::applicationDirPath()+"\\nwpc-sms-collector\\sms_collector.py",
-        arguments
+        python_script_path_,
+        arguments_
     );
 
     this->deleteLater();

@@ -39,8 +39,20 @@ void TaskTest::testSmsTask()
     QSharedPointer<PythonEnv::PythonEngine> python_engine{new PythonEnv::PythonEngine};
     python_engine->setPythonDistributionDir("D:/windroc/project/2017/timer/playground/python/python36-x64");
     python_engine->setPythonExecutableProgramPath("D:/windroc/project/2017/timer/playground/python/python36-x64/python.exe");
+    QString python_script_path = "D:/windroc/project/2017/timer/nuwe-timer-app/src/app/nwpc-sms-collector/sms_collector.py";
 
-    SmsTask *task = new SmsTask{python_engine};
+    QStringList arguments;
+    arguments<<"variable";
+    arguments<<"--host=10.20.49.131";
+    arguments<<"--port=22";
+    arguments<<"--user=nwp";
+    arguments<<"--password=nwpop";
+    arguments<<"--sms-server=nwpc_op";
+    arguments<<"--sms-user=nwp";
+    arguments<<"--sms-password=1";
+    arguments<<"--node-path=/grapes_meso_v4_1";
+
+    SmsTask *task = new SmsTask{python_engine, python_script_path, arguments};
     task->run();
 
     QThreadPool::globalInstance()->waitForDone();
