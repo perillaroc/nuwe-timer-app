@@ -8,7 +8,7 @@ TARGET = nuwe-timer-app
 DESTDIR=$$build_base_dir/bin
 
 INCLUDEPATH += ../libs
-LIBS += -L$$build_lib_dir -lprogress_util
+LIBS += -L$$build_lib_dir -lprogress_util -lpython_env -lcore
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
@@ -23,15 +23,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
-    check_task.cpp \
-    python_command.cpp \
-    python_engine.cpp
+        mainwindow.cpp
 
-HEADERS  += mainwindow.h \
-    check_task.h \
-    python_command.h \
-    python_engine.h
+HEADERS  += mainwindow.h
 
 FORMS    += mainwindow.ui
 

@@ -10,6 +10,9 @@ class CORESHARED_EXPORT Node
 {
 public:
     Node();
+
+protected:
+
 };
 
 }

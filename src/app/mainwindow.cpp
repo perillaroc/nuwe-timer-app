@@ -1,12 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "check_task.h"
-#include "python_engine.h"
+#include <core/sms_task.h>
+#include <python_env/python_engine.h>
 
 #include <QTimer>
 #include <QDatetime>
 #include <QtDebug>
+
+using namespace NuweTimer::Core;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow{parent},
@@ -61,7 +63,24 @@ void MainWindow::checkTaskList()
     qDebug()<<"[MainWindow::checkTaskList]"<<current_date_time;
     if(current_date_time.time().second()%10 == 0)
     {
-        CheckTask *task = new CheckTask{python_engine_};
+        QString python_script_path = QApplication::applicationDirPath() + "/nwpc-sms-collector/sms_collector.py";
+
+        QStringList arguments;
+        arguments<<"variable";
+        arguments<<"--host=10.20.49.131";
+        arguments<<"--port=22";
+        arguments<<"--user=nwp";
+        arguments<<"--password=nwpop";
+        arguments<<"--sms-server=nwpc_op";
+        arguments<<"--sms-user=nwp";
+        arguments<<"--sms-password=1";
+        arguments<<"--node-path=/grapes_meso_v4_1";
+
+        SmsTask *task = new SmsTask{
+                python_engine_,
+                python_script_path,
+                arguments
+        };
         task->run();
     }
 }
