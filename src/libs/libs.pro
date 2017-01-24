@@ -1,4 +1,6 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-    progress_util
+    progress_util \
+    core \
+    python_env

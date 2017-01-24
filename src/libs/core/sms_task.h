@@ -1,0 +1,32 @@
+#pragma once
+
+#include <QSharedPointer>
+#include "core_global.h"
+#include "task.h"
+
+namespace PythonEnv{
+class PythonEngine;
+}
+
+namespace NuweTimer{
+
+namespace Core{
+
+class CORESHARED_EXPORT SmsTask : public Task
+{
+    Q_OBJECT
+public:
+    SmsTask(QSharedPointer<PythonEnv::PythonEngine> python_engine, QObject *parent=nullptr);
+    ~SmsTask();
+
+    void run();
+
+private:
+    QSharedPointer<PythonEnv::PythonEngine> python_engine_;
+
+};
+
+}
+}
+
+
