@@ -1,42 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>NuweTimer::App::MainWindow</class>
+ <widget class="QMainWindow" name="NuweTimer::App::MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>354</width>
-    <height>221</height>
+    <width>458</width>
+    <height>263</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>NUWE Timer App</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="timer_switch_pushbutton">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>10</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
+   <layout class="QGridLayout" name="gridLayout">
+    <property name="leftMargin">
+     <number>6</number>
     </property>
-    <property name="text">
-     <string>Start Timer</string>
+    <property name="topMargin">
+     <number>6</number>
     </property>
-    <property name="checkable">
-     <bool>true</bool>
+    <property name="rightMargin">
+     <number>6</number>
     </property>
-   </widget>
+    <property name="bottomMargin">
+     <number>6</number>
+    </property>
+    <item row="0" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="timer_switch_pushbutton">
+        <property name="text">
+         <string>Start Timer</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Current Tasks</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QTreeView" name="node_tree_view"/>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>354</width>
+     <width>458</width>
      <height>23</height>
     </rect>
    </property>

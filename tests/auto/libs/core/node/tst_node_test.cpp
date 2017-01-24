@@ -2,6 +2,15 @@
 #include <QtTest>
 #include <QCoreApplication>
 
+#include <core/node.h>
+#include <core/task.h>
+#include <core/trigger.h>
+
+#include <memory>
+
+using namespace std;
+using namespace NuweTimer::Core;
+
 class NodeTest : public QObject
 {
     Q_OBJECT
@@ -13,8 +22,7 @@ private Q_SLOTS:
     void initTestCase();
     void cleanupTestCase();
 
-    void testCase1_data();
-    void testCase1();
+    void testDefaultNode();
 };
 
 NodeTest::NodeTest()
@@ -29,16 +37,17 @@ void NodeTest::cleanupTestCase()
 {
 }
 
-void NodeTest::testCase1_data()
+void NodeTest::testDefaultNode()
 {
-    QTest::addColumn<QString>("data");
-    QTest::newRow("0") << QString();
-}
+    unique_ptr<Node> node{new Node};
+    QPointer<Task> task{new Task};
+    unique_ptr<Trigger> trigger{new Trigger};
 
-void NodeTest::testCase1()
-{
-    QFETCH(QString, data);
-    QVERIFY2(true, "Failure");
+    node->setTask(task);
+    node->setTrigger(trigger);
+
+    QCOMPARE(node->state(), NodeState::State::Unknown);
+    QCOMPARE(node->resolveDepencies(), true);
 }
 
 QTEST_MAIN(NodeTest)

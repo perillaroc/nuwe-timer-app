@@ -48,6 +48,4 @@ void SmsTask::run()
         python_script_path_,
         arguments_
     );
-
-    this->deleteLater();
 }

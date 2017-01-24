@@ -3,6 +3,9 @@
 #include <QPointer>
 #include <QSharedPointer>
 
+#include <vector>
+#include <memory>
+
 QT_BEGIN_NAMESPACE
 class QTimer;
 QT_END_NAMESPACE
@@ -10,6 +13,14 @@ QT_END_NAMESPACE
 namespace PythonEnv{
 class PythonEngine;
 }
+
+namespace NuweTimer {
+
+namespace Core{
+class Node;
+}
+
+namespace App{
 
 namespace Ui {
 class MainWindow;
@@ -30,6 +41,7 @@ private slots:
     void on_timer_switch_pushbutton_toggled(bool checked);
 
 private:
+    void initNodeList();
     void checkTaskList();
 
     Ui::MainWindow *ui;
@@ -38,4 +50,9 @@ private:
     float timer_interval_msec_;
 
     QSharedPointer<PythonEnv::PythonEngine> python_engine_;
+
+    std::vector<std::unique_ptr<NuweTimer::Core::Node>> node_list_;
 };
+}
+}
+
