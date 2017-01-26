@@ -52,7 +52,7 @@ bool Node::resolveDepencies()
     }
     else
     {
-        return false;
+        return true;
     }
 }
 
