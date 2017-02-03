@@ -39,3 +39,6 @@ nwpc_sms_dir~=s,/,\\,g
 
 QMAKE_POST_LINK += $$quote(IF NOT EXIST $${nwpc_sms_target_dir} (MKDIR $${nwpc_sms_target_dir})$$escape_expand(\n\t))
 QMAKE_POST_LINK += $$quote(XCOPY $${nwpc_sms_dir} $${nwpc_sms_target_dir} /E /Y$$escape_expand(\n\t))
+
+RESOURCES += \
+    images.qrc
