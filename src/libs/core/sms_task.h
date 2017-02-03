@@ -24,7 +24,7 @@ public:
             );
     ~SmsTask();
 
-    void run();
+    void run() override;
 
 private:
     QSharedPointer<PythonEnv::PythonEngine> python_engine_;

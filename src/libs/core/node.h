@@ -21,8 +21,10 @@ public:
 
     void setTrigger(std::unique_ptr<Trigger> &trigger);
     Trigger *trigger();
+
     void setTask(QPointer<Task> &task);
     Task *task();
+
     void setState(NodeState::State state);
     NodeState::State state() const;
 
