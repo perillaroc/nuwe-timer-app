@@ -8,6 +8,7 @@
 
 QT_BEGIN_NAMESPACE
 class QTimer;
+class QStandardItemModel;
 QT_END_NAMESPACE
 
 namespace PythonEnv{
@@ -40,6 +41,8 @@ public:
 private slots:
     void on_timer_switch_pushbutton_toggled(bool checked);
 
+    void slotUpdateNodeTreeView();
+
 private:
     void initNodeList();
     void checkTaskList();
@@ -52,6 +55,7 @@ private:
     QSharedPointer<PythonEnv::PythonEngine> python_engine_;
 
     std::vector<std::unique_ptr<NuweTimer::Core::Node>> node_list_;
+    QPointer<QStandardItemModel> node_tree_model_;
 };
 }
 }

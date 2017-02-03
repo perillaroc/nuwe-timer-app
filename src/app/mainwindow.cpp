@@ -7,6 +7,7 @@
 
 #include <python_env/python_engine.h>
 
+#include <QStandardItemModel>
 #include <QTimer>
 #include <QDatetime>
 #include <QtDebug>
@@ -20,7 +21,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui{new Ui::MainWindow},
     timer_{new QTimer{this}},
     timer_interval_msec_{1000},
-    python_engine_{QSharedPointer<PythonEnv::PythonEngine>{new PythonEnv::PythonEngine{this}}}
+    python_engine_{QSharedPointer<PythonEnv::PythonEngine>{new PythonEnv::PythonEngine{this}}},
+    node_tree_model_{new QStandardItemModel{this}}
 {
     ui->setupUi(this);
 
@@ -31,6 +33,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(timer_, &QTimer::timeout, this, &MainWindow::checkTaskList);
 
     ui->timer_switch_pushbutton->setChecked(true);
+
+    node_tree_model_->setHorizontalHeaderLabels(QStringList()<<"name"<<"trigger");
+    ui->node_tree_view->setModel(node_tree_model_);
 
     initNodeList();
 }
@@ -61,6 +66,23 @@ void MainWindow::on_timer_switch_pushbutton_toggled(bool checked)
     {
         stopTimer();
         ui->timer_switch_pushbutton->setText("Start Timer");
+    }
+}
+
+void MainWindow::slotUpdateNodeTreeView()
+{
+    QStandardItem* root = node_tree_model_->invisibleRootItem();
+    root->removeRows(0, root->rowCount());
+
+    for(auto &node: node_list_)
+    {
+        QStandardItem* name_item = new QStandardItem();
+        name_item->setText(QString::fromStdString(node->name()));
+
+        QStandardItem* trigger_item = new QStandardItem();
+        trigger_item->setText(QString::fromStdString(node->trigger()->toString()));
+
+        root->appendRow(QList<QStandardItem*>()<<name_item<<trigger_item);
     }
 }
 
@@ -118,6 +140,8 @@ void MainWindow::initNodeList()
 
         node_list_.push_back(std::move(node));
     }
+
+    slotUpdateNodeTreeView();
 }
 
 void MainWindow::checkTaskList()

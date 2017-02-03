@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core_global.h"
+#include <string>
 
 namespace NuweTimer{
 
@@ -12,6 +13,7 @@ public:
     Trigger();
     virtual ~Trigger();
 
+    virtual std::string toString() const;
     virtual bool fit();
 
 private:

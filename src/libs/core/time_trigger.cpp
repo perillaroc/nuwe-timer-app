@@ -9,6 +9,11 @@ TimeTrigger::TimeTrigger(const QTime &time):
 
 }
 
+std::string TimeTrigger::toString() const
+{
+    return time_.toString(Qt::TextDate).toStdString();
+}
+
 bool TimeTrigger::fit()
 {
     QTime current_time = getCurrentTime();

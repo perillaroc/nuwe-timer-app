@@ -13,6 +13,7 @@ class CORESHARED_EXPORT TimeTrigger : public Trigger
 public:
     TimeTrigger(const QTime &time);
 
+    std::string toString() const override;
     bool fit();
 
 protected:

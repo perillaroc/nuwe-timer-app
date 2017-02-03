@@ -12,6 +12,11 @@ Trigger::~Trigger()
 
 }
 
+std::string Trigger::toString() const
+{
+    return "";
+}
+
 bool Trigger::fit()
 {
     return true;
