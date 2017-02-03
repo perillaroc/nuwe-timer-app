@@ -39,9 +39,9 @@ public:
     void stopTimer();
 
 private slots:
-    void on_timer_switch_pushbutton_toggled(bool checked);
+    void slotSwitchTimer(bool checked);
 
-    void slotUpdateNodeTreeView();
+    void slotUpdateNodeTreeView(bool checked=false);
 
 private:
     void initNodeList();

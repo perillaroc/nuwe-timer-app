@@ -29,13 +29,19 @@ MainWindow::MainWindow(QWidget *parent) :
     python_engine_->setPythonDistributionDir("D:/windroc/project/2017/timer/playground/python/python36-x64");
     python_engine_->setPythonExecutableProgramPath("D:/windroc/project/2017/timer/playground/python/python36-x64/python.exe");
 
-    timer_->setInterval(timer_interval_msec_);
-    connect(timer_, &QTimer::timeout, this, &MainWindow::checkTaskList);
-
-    ui->timer_switch_pushbutton->setChecked(true);
-
     node_tree_model_->setHorizontalHeaderLabels(QStringList()<<"name"<<"trigger");
     ui->node_tree_view->setModel(node_tree_model_);
+
+    timer_->setInterval(timer_interval_msec_);
+    connect(timer_, &QTimer::timeout, this, &MainWindow::checkTaskList);
+//    connect(timer_, &QTimer::timeout, [=](){
+//        slotUpdateNodeTreeView();
+//    });
+
+    connect(ui->timer_switch_pushbutton, &QPushButton::toggled, this, &MainWindow::slotSwitchTimer);
+    connect(ui->update_pushbutton, &QPushButton::clicked, this, &MainWindow::slotUpdateNodeTreeView);
+
+    ui->timer_switch_pushbutton->setChecked(true);
 
     initNodeList();
 }
@@ -55,7 +61,7 @@ void MainWindow::stopTimer()
     timer_->stop();
 }
 
-void MainWindow::on_timer_switch_pushbutton_toggled(bool checked)
+void MainWindow::slotSwitchTimer(bool checked)
 {
     if(checked)
     {
@@ -69,8 +75,9 @@ void MainWindow::on_timer_switch_pushbutton_toggled(bool checked)
     }
 }
 
-void MainWindow::slotUpdateNodeTreeView()
+void MainWindow::slotUpdateNodeTreeView(bool checked)
 {
+    Q_UNUSED(checked);
     QStandardItem* root = node_tree_model_->invisibleRootItem();
     root->removeRows(0, root->rowCount());
 
@@ -84,6 +91,7 @@ void MainWindow::slotUpdateNodeTreeView()
 
         root->appendRow(QList<QStandardItem*>()<<name_item<<trigger_item);
     }
+    qDebug()<<"[MainWindow::slotUpdateNodeTreeView] update tree done.";
 }
 
 void MainWindow::initNodeList()
@@ -160,5 +168,3 @@ void MainWindow::checkTaskList()
         }
     }
 }
-
-
