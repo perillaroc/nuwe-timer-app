@@ -46,8 +46,12 @@ void NodeTest::testDefaultNode()
     node->setTask(task);
     node->setTrigger(trigger);
 
+    QCOMPARE(QString::fromStdString(node->name()), QString(""));
     QCOMPARE(node->state(), NodeState::State::Unknown);
     QCOMPARE(node->resolveDepencies(), true);
+
+    node->setName("new name");
+    QCOMPARE(QString::fromStdString(node->name()), QString("new name"));
 }
 
 QTEST_MAIN(NodeTest)

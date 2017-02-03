@@ -87,7 +87,7 @@ void MainWindow::initNodeList()
         };
         unique_ptr<Trigger> trigger{new TimeTrigger{QTime(0,0,0)}};
 
-        unique_ptr<Node> node{new Node};
+        unique_ptr<Node> node{new Node{"grapes_meso_v4_1"}};
         node->setTrigger(trigger);
         node->setTask(task);
 
@@ -112,7 +112,7 @@ void MainWindow::initNodeList()
         };
         unique_ptr<Trigger> trigger{new TimeTrigger{QTime(0,0,0)}};
 
-        unique_ptr<Node> node{new Node};
+        unique_ptr<Node> node{new Node{"gmf_grapes_gfs_v2_0"}};
         node->setTrigger(trigger);
         node->setTask(task);
 

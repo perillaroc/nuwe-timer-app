@@ -3,6 +3,7 @@
 #include "core_global.h"
 #include "node_state.h"
 
+#include <string>
 #include <memory>
 #include <QPointer>
 
@@ -16,8 +17,11 @@ class Task;
 class CORESHARED_EXPORT Node
 {
 public:
-    Node();
+    Node(const std::string &name = "");
     virtual ~Node();
+
+    void setName(const std::string &name);
+    std::string name() const;
 
     void setTrigger(std::unique_ptr<Trigger> &trigger);
     Trigger *trigger();
@@ -33,6 +37,7 @@ public:
     void run();
 
 protected:
+    std::string name_;
     NodeState state_;
     std::unique_ptr<Trigger> trigger_;
     QPointer<Task> task_;

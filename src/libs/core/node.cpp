@@ -4,14 +4,24 @@
 
 using namespace NuweTimer::Core;
 
-Node::Node()
+Node::Node(const std::string &name)
 {
-
+    setName(name);
 }
 
 Node::~Node()
 {
 
+}
+
+void Node::setName(const std::string &name)
+{
+    name_ = name;
+}
+
+std::string Node::name() const
+{
+    return name_;
 }
 
 void Node::setTrigger(std::unique_ptr<Trigger> &trigger)

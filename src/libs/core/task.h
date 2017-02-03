@@ -14,7 +14,7 @@ public:
     Task(QObject *parent = nullptr);
     virtual ~Task();
 
-    virtual void run() = 0;
+    virtual void run();
 
 private:
 
