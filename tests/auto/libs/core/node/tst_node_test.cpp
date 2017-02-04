@@ -43,7 +43,7 @@ void NodeTest::testDefaultNode()
     QPointer<Task> task{new Task};
     unique_ptr<Trigger> trigger{new Trigger};
 
-    node->setTask(task);
+    node->setTask(task);    
     node->setTrigger(trigger);
 
     QCOMPARE(QString::fromStdString(node->name()), QString(""));

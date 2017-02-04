@@ -89,7 +89,10 @@ void MainWindow::slotUpdateNodeTreeView(bool checked)
         QStandardItem* trigger_item = new QStandardItem();
         trigger_item->setText(QString::fromStdString(node->trigger()->toString()));
 
-        root->appendRow(QList<QStandardItem*>()<<name_item<<trigger_item);
+        QStandardItem* state_item = new QStandardItem();
+        state_item->setText(QString::fromStdString(NodeState::toString(node->state())));
+
+        root->appendRow(QList<QStandardItem*>()<<name_item<<trigger_item<<state_item);
     }
     qDebug()<<"[MainWindow::slotUpdateNodeTreeView] update tree done.";
 }

@@ -25,12 +25,13 @@ SmsTask::~SmsTask()
 void SmsTask::run()
 {
     //    qDebug()<<"CheckTask::run check task";
+    submit();
 
     PythonCommand* command = new PythonCommand;
 
     connect(command, &PythonCommand::signalFinished,
             [=](){
-        //        qDebug()<<"command finished";
+        complete();
     });
 
     connect(command, &PythonCommand::signalStdOutString,
@@ -48,4 +49,6 @@ void SmsTask::run()
         python_script_path_,
         arguments_
     );
+
+    init();
 }
