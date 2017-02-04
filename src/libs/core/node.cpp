@@ -37,7 +37,7 @@ Trigger *Node::trigger()
 void Node::setTask(QPointer<Task> &task)
 {
     task_.swap(task);
-    task_->setNode(this);
+    task_->setNode(std::shared_ptr<Node>(this));
 }
 
 Task *Node::task()

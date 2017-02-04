@@ -4,8 +4,7 @@
 using namespace NuweTimer::Core;
 
 Task::Task(QObject *parent):
-    QObject{parent},
-    node_{nullptr}
+    QObject{parent}
 {
 }
 
@@ -14,7 +13,7 @@ Task::~Task()
 
 }
 
-void Task::setNode(Node *node)
+void Task::setNode(std::shared_ptr<Node> &node)
 {
     node_ = node;
 }

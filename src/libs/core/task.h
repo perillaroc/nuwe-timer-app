@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core_global.h"
+#include <memory>
 #include <QObject>
 
 namespace NuweTimer{
@@ -16,7 +17,7 @@ public:
     Task(QObject *parent = nullptr);
     virtual ~Task();
 
-    void setNode(Node *node);
+    void setNode(std::shared_ptr<Node> &node);
 
     virtual void run();
 
@@ -26,7 +27,7 @@ public:
     virtual void complete();
 
 private:
-    Node *node_;
+    std::shared_ptr<Node> node_;
 };
 
 }

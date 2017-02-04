@@ -54,7 +54,7 @@ private:
 
     QSharedPointer<PythonEnv::PythonEngine> python_engine_;
 
-    std::vector<std::unique_ptr<NuweTimer::Core::Node>> node_list_;
+    std::vector<std::shared_ptr<NuweTimer::Core::Node>> node_list_;
     QPointer<QStandardItemModel> node_tree_model_;
 };
 }

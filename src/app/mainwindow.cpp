@@ -120,11 +120,11 @@ void MainWindow::initNodeList()
         };
         unique_ptr<Trigger> trigger{new TimeTrigger{QTime(0,0,0)}};
 
-        unique_ptr<Node> node{new Node{"grapes_meso_v4_1"}};
+        shared_ptr<Node> node = make_shared<Node>("grapes_meso_v4_1");
         node->setTrigger(trigger);
         node->setTask(task);
 
-        node_list_.push_back(std::move(node));
+        node_list_.push_back(node);
     }
     {
         QStringList arguments;
@@ -145,11 +145,11 @@ void MainWindow::initNodeList()
         };
         unique_ptr<Trigger> trigger{new TimeTrigger{QTime(0,0,0)}};
 
-        unique_ptr<Node> node{new Node{"gmf_grapes_gfs_v2_0"}};
+        shared_ptr<Node> node = make_shared<Node>("gmf_grapes_gfs_v2_0");
         node->setTrigger(trigger);
         node->setTask(task);
 
-        node_list_.push_back(std::move(node));
+        node_list_.push_back(node);
     }
 
     slotUpdateNodeTreeView();
