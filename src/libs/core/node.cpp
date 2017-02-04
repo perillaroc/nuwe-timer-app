@@ -79,6 +79,18 @@ bool Node::resolveDependencies()
     {
         return false;
     }
+    if(state() == NodeState::State::Active)
+    {
+        return false;
+    }
+    if(state() == NodeState::State::Aborted)
+    {
+        return false;
+    }
+    if(state() == NodeState::State::Unknown)
+    {
+        return false;
+    }
     if(trigger_)
     {
         return trigger_->fit();
