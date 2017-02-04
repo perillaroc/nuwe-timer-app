@@ -55,16 +55,14 @@ NodeState::State Node::state() const
     return state_.state();
 }
 
-bool Node::resolveDepencies()
+void Node::begin()
 {
-    if(trigger_)
-    {
-        return trigger_->fit();
-    }
-    else
-    {
-        return true;
-    }
+    setState(NodeState::State::Queued);
+}
+
+void Node::requeue()
+{
+    setState(NodeState::State::Queued);
 }
 
 void Node::run()
@@ -73,6 +71,20 @@ void Node::run()
     {
         task_->run();
     }
+}
+
+bool Node::resolveDependencies()
+{
+    if(state() == NodeState::State::Completed)
+    {
+        return false;
+    }
+    if(trigger_)
+    {
+        return trigger_->fit();
+    }
+
+    return false;
 }
 
 

@@ -32,10 +32,12 @@ public:
     void setState(NodeState::State state);
     NodeState::State state() const;
 
-    virtual bool resolveDepencies();
+    virtual void begin();
+    virtual void requeue();
 
     void run();
 
+    virtual bool resolveDependencies();
 protected:
     std::string name_;
     NodeState state_;

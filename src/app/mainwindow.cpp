@@ -10,11 +10,15 @@
 #include <QStandardItemModel>
 #include <QTimer>
 #include <QDatetime>
+#include <QVariant>
 #include <QtDebug>
 
 using namespace std;
 using namespace NuweTimer::Core;
 using namespace NuweTimer::App;
+
+Q_DECLARE_SMART_POINTER_METATYPE(std::shared_ptr)
+Q_DECLARE_METATYPE(std::shared_ptr<Node>)
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow{parent},
@@ -85,6 +89,7 @@ void MainWindow::slotUpdateNodeTreeView(bool checked)
     {
         QStandardItem* name_item = new QStandardItem();
         name_item->setText(QString::fromStdString(node->name()));
+        name_item->setData(QVariant::fromValue<std::shared_ptr<Node>>(node), Qt::UserRole + 10);
 
         QStandardItem* trigger_item = new QStandardItem();
         trigger_item->setText(QString::fromStdString(node->trigger()->toString()));
@@ -152,6 +157,11 @@ void MainWindow::initNodeList()
         node_list_.push_back(node);
     }
 
+    for(auto &node: node_list_)
+    {
+        node->begin();
+    }
+
     slotUpdateNodeTreeView();
 }
 
@@ -164,7 +174,7 @@ void MainWindow::checkTaskList()
     {
         for(auto &task: node_list_)
         {
-            if(task->resolveDepencies())
+            if(task->resolveDependencies())
             {
                 task->run();
             }
