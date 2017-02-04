@@ -57,6 +57,13 @@
        </spacer>
       </item>
       <item>
+       <widget class="QPushButton" name="requeue_button">
+        <property name="text">
+         <string>Requeue</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="update_pushbutton">
         <property name="text">
          <string>Update</string>

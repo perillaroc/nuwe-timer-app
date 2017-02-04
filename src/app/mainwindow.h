@@ -43,6 +43,8 @@ private slots:
 
     void slotUpdateNodeTreeView(bool checked=false);
 
+    void on_requeue_button_clicked();
+
 private:
     void initNodeList();
     void checkTaskList();

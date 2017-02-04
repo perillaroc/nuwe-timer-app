@@ -38,9 +38,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     timer_->setInterval(timer_interval_msec_);
     connect(timer_, &QTimer::timeout, this, &MainWindow::checkTaskList);
-//    connect(timer_, &QTimer::timeout, [=](){
-//        slotUpdateNodeTreeView();
-//    });
+    connect(timer_, &QTimer::timeout, [=](){
+        slotUpdateNodeTreeView();
+    });
 
     connect(ui->timer_switch_pushbutton, &QPushButton::toggled, this, &MainWindow::slotSwitchTimer);
     connect(ui->update_pushbutton, &QPushButton::clicked, this, &MainWindow::slotUpdateNodeTreeView);
@@ -83,24 +83,54 @@ void MainWindow::slotUpdateNodeTreeView(bool checked)
 {
     Q_UNUSED(checked);
     QStandardItem* root = node_tree_model_->invisibleRootItem();
-    root->removeRows(0, root->rowCount());
 
-    for(auto &node: node_list_)
+    //root->removeRows(0, root->rowCount());
+
+    for(int i=0; i<node_list_.size(); i++)
     {
-        QStandardItem* name_item = new QStandardItem();
-        name_item->setText(QString::fromStdString(node->name()));
-        name_item->setData(QVariant::fromValue<std::shared_ptr<Node>>(node), Qt::UserRole + 10);
+        auto node = node_list_[i];
+        if(root->rowCount() > i)
+        {
+            QStandardItem* name_item = root->child(i, 0);
+            auto store_node = name_item->data(Qt::UserRole + 10).value<std::shared_ptr<Node>>();
+            if(store_node != node)
+            {
+                name_item->setText(QString::fromStdString(node->name()));
+                name_item->setData(QVariant::fromValue<std::shared_ptr<Node>>(node), Qt::UserRole + 10);
 
-        QStandardItem* trigger_item = new QStandardItem();
-        trigger_item->setText(QString::fromStdString(node->trigger()->toString()));
+                QStandardItem* trigger_item = root->child(i, 1);
+                trigger_item->setText(QString::fromStdString(node->trigger()->toString()));
+            }
+            QStandardItem *state_item = root->child(i, 2);
+            state_item->setText(QString::fromStdString(NodeState::toString(node->state())));
+        }
+        else
+        {
+            QStandardItem* name_item = new QStandardItem();
+            name_item->setText(QString::fromStdString(node->name()));
+            name_item->setData(QVariant::fromValue<std::shared_ptr<Node>>(node), Qt::UserRole + 10);
 
-        QStandardItem* state_item = new QStandardItem();
-        state_item->setText(QString::fromStdString(NodeState::toString(node->state())));
+            QStandardItem* trigger_item = new QStandardItem();
+            trigger_item->setText(QString::fromStdString(node->trigger()->toString()));
 
-        root->appendRow(QList<QStandardItem*>()<<name_item<<trigger_item<<state_item);
+            QStandardItem* state_item = new QStandardItem();
+            state_item->setText(QString::fromStdString(NodeState::toString(node->state())));
+
+            root->appendRow(QList<QStandardItem*>()<<name_item<<trigger_item<<state_item);
+        }
+
     }
     qDebug()<<"[MainWindow::slotUpdateNodeTreeView] update tree done.";
 }
+
+void NuweTimer::App::MainWindow::on_requeue_button_clicked()
+{
+    for(auto &node: node_list_)
+    {
+        node->requeue();
+    }
+}
+
 
 void MainWindow::initNodeList()
 {
@@ -181,3 +211,4 @@ void MainWindow::checkTaskList()
         }
     }
 }
+
