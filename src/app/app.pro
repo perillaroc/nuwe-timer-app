@@ -30,7 +30,8 @@ HEADERS  += mainwindow.h
 FORMS    += mainwindow.ui
 
 DISTFILES += \
-    nwpc-sms-collector/sms_collector.py
+    nwpc-sms-collector/sms_collector.py \
+    nwpc-sms-collector/conf/node.conf.json
 
 nwpc_sms_target_dir = $${DESTDIR}/nwpc-sms-collector
 nwpc_sms_target_dir~=s,/,\\,g

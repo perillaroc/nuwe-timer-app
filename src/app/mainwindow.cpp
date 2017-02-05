@@ -11,6 +11,11 @@
 #include <QTimer>
 #include <QDatetime>
 #include <QVariant>
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QFile>
+#include <QByteArray>
 #include <QtDebug>
 
 using namespace std;
@@ -136,54 +141,61 @@ void MainWindow::initNodeList()
 {
 
     QString python_script_path = QApplication::applicationDirPath() + "/nwpc-sms-collector/sms_collector.py";
-    {
-        QStringList arguments;
-        arguments<<"variable";
-        arguments<<"--host=10.20.49.131";
-        arguments<<"--port=22";
-        arguments<<"--user=nwp";
-        arguments<<"--password=nwpop";
-        arguments<<"--sms-server=nwpc_op";
-        arguments<<"--sms-user=nwp";
-        arguments<<"--sms-password=1";
-        arguments<<"--node-path=/grapes_meso_v4_1";
+    QString node_config_file_path = QApplication::applicationDirPath() + "/nwpc-sms-collector/conf/node.conf.json";
 
-        QPointer<Task> task = new SmsTask{
-                python_engine_,
-                python_script_path,
-                arguments
-        };
-        unique_ptr<Trigger> trigger{new TimeTrigger{QTime(0,0,0)}};
-
-        shared_ptr<Node> node = make_shared<Node>("grapes_meso_v4_1");
-        node->setTrigger(trigger);
-        node->setTask(task);
-
-        node_list_.push_back(node);
+    QFile node_config_file{node_config_file_path};
+    if(!node_config_file.open(QIODevice::ReadOnly)) {
+        qCritical("Couldn't open save file.");
+        return;
     }
+    QByteArray node_config_data = node_config_file.readAll();
+    QJsonDocument node_config_document = QJsonDocument::fromJson(node_config_data);
+
+    QJsonObject root = node_config_document.object();
+    QJsonObject tree = root["tree"].toObject();
+    QJsonArray children = tree["children"].toArray();
+
+    for(int i=0; i<children.size(); i++)
     {
+        QJsonObject child = children[i].toObject();
+
+        QString name = child["name"].toString();
+        shared_ptr<Node> node = make_shared<Node>(name.toStdString());
+
+        QJsonObject trigger = child["trigger"].toArray()[0].toObject();
+        QString trigger_type = trigger["type"].toString();
+        if(trigger_type == "time")
+        {
+            unique_ptr<Trigger> trigger{new TimeTrigger{QTime(0,0,0)}};
+            node->setTrigger(trigger);
+        }
+
+        QJsonObject task = child["task"].toObject();
+        QJsonObject task_data = task["data"].toObject();
+
+        QJsonObject auth = task_data["auth"].toObject();
+        QJsonObject server = task_data["server"].toObject();
+
+        QJsonObject variable = task_data["variables"].toArray()[0].toObject();
+
         QStringList arguments;
         arguments<<"variable";
-        arguments<<"--host=10.20.49.131";
-        arguments<<"--port=22";
-        arguments<<"--user=nwp";
-        arguments<<"--password=nwpop";
-        arguments<<"--sms-server=nwpc_op";
-        arguments<<"--sms-user=nwp";
-        arguments<<"--sms-password=1";
-        arguments<<"--node-path=/gmf_grapes_gfs_v2_0";
+        arguments<<"--host=" + auth["host"].toString();
+        arguments<<"--port=" + auth["port"].toString();
+        arguments<<"--user=" + auth["user"].toString();
+        arguments<<"--password=" + auth["password"].toString();
+        arguments<<"--sms-server=" + server["sms_server"].toString();
+        arguments<<"--sms-user=" + server["sms_user"].toString();
+        arguments<<"--sms-password=" + server["sms_password"].toString();
+        arguments<<"--node-path=" + variable["path"].toString();
 
-        QPointer<Task> task = new SmsTask{
+        QPointer<Task> sms_task = new SmsTask{
                 python_engine_,
                 python_script_path,
                 arguments
         };
-        unique_ptr<Trigger> trigger{new TimeTrigger{QTime(0,0,0)}};
 
-        shared_ptr<Node> node = make_shared<Node>("gmf_grapes_gfs_v2_0");
-        node->setTrigger(trigger);
-        node->setTask(task);
-
+        node->setTask(sms_task);
         node_list_.push_back(node);
     }
 

@@ -1,0 +1,74 @@
+{
+  "tree": {
+    "children": [
+        {
+          "name": "grapes_meso_v4_1",
+          "trigger": [
+            {
+              "type": "time",
+              "time": "00:00:00"
+            }
+          ],
+          "task": {
+            "type": "SmsTask",
+            "category": "variable",
+            "data": {
+              "auth": {
+                "host": "10.20.49.131",
+                "port": "22",
+                "user": "nwp",
+                "password": "nwpc_op"
+              },
+              "server": {
+                "sms_server": "nwpc_op",
+                "sms_user": "nwp",
+                "sms_password": "1"
+              },
+              "variables": [
+                {
+                  "path": "/grapes_meso_v4_1",
+                  "name": "SMSDATA",
+                  "type": "date",
+                  "value": "current"
+                }
+              ]
+            }
+          }
+       },
+       {
+         "name": "gmf_grapes_gfs_v2_0",
+         "trigger": [
+           {
+             "type": "time",
+             "time": "00:00:00"
+           }
+         ],
+         "task": {
+           "type": "SmsTask",
+           "category": "variable",
+           "data": {
+             "auth": {
+               "host": "10.20.49.131",
+               "port": "22",
+               "user": "nwp",
+               "password": "nwpc_op"
+             },
+             "server": {
+               "sms_server": "nwpc_op",
+               "sms_user": "nwp",
+               "sms_password": "1"
+             },
+             "variables": [
+               {
+                 "path": "/gmf_grapes_gfs_v2_0",
+                 "name": "SMSDATA",
+                 "type": "date",
+                 "value": "current"
+               }
+             ]
+           }
+         }
+       }
+    ]
+  }
+}
