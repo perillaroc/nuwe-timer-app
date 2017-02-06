@@ -4,6 +4,8 @@
 #include "core_global.h"
 #include "task.h"
 
+#include <progress_util/shell_command.h>
+
 namespace PythonEnv{
 class PythonEngine;
 }
@@ -25,6 +27,9 @@ public:
     ~SmsTask();
 
     void run() override;
+
+private slots:
+    void slotCommandFinished(const ProgressUtil::ShellCommandResponse &shell_command_response);
 
 private:
     QSharedPointer<PythonEnv::PythonEngine> python_engine_;
