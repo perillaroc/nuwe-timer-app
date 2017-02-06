@@ -4,4 +4,5 @@ SUBDIRS += \
     node \
     node_state \
     task \
-    trigger
+    trigger \
+    checker

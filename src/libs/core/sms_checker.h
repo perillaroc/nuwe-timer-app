@@ -24,9 +24,12 @@ public:
 
     bool isFit(const QString &test_value) override;
 
-private:
-    QString getCurrentDay() const;
+protected:
+    // same as TimeTrigger class in time_trigger.
+    // virutal for using google c++ test. need future work.
+    virtual QString getCurrentDay() const;
 
+private:
     QString path_;
     QString type_;
     QString name_;
