@@ -3,6 +3,7 @@
 
 #include <core/node.h>
 #include <core/sms_task.h>
+#include <core/sms_checker.h>
 #include <core/time_trigger.h>
 
 #include <python_env/python_engine.h>
@@ -128,7 +129,7 @@ void MainWindow::slotUpdateNodeTreeView(bool checked)
     qDebug()<<"[MainWindow::slotUpdateNodeTreeView] update tree done.";
 }
 
-void NuweTimer::App::MainWindow::on_requeue_button_clicked()
+void MainWindow::on_requeue_button_clicked()
 {
     for(auto &node: node_list_)
     {
@@ -136,10 +137,8 @@ void NuweTimer::App::MainWindow::on_requeue_button_clicked()
     }
 }
 
-
 void MainWindow::initNodeList()
 {
-
     QString python_script_path = QApplication::applicationDirPath() + "/nwpc-sms-collector/sms_collector.py";
     QString node_config_file_path = QApplication::applicationDirPath() + "/nwpc-sms-collector/conf/node.conf.json";
 
@@ -171,31 +170,57 @@ void MainWindow::initNodeList()
         }
 
         QJsonObject task = child["task"].toObject();
-        QJsonObject task_data = task["data"].toObject();
+        QString task_type = task["type"].toString();
+        if(task_type!="SmsTask")
+        {
+            qCritical()<<"[MainWindow::initNodeList] task type is not supported:"<< task_type;
+            continue;
+        }
 
-        QJsonObject auth = task_data["auth"].toObject();
-        QJsonObject server = task_data["server"].toObject();
+        QString task_category = task["category"].toString();
 
-        QJsonObject variable = task_data["variables"].toArray()[0].toObject();
+        if(task_category == "variable")
+        {
+            QJsonObject task_data = task["data"].toObject();
 
-        QStringList arguments;
-        arguments<<"variable";
-        arguments<<"--host=" + auth["host"].toString();
-        arguments<<"--port=" + auth["port"].toString();
-        arguments<<"--user=" + auth["user"].toString();
-        arguments<<"--password=" + auth["password"].toString();
-        arguments<<"--sms-server=" + server["sms_server"].toString();
-        arguments<<"--sms-user=" + server["sms_user"].toString();
-        arguments<<"--sms-password=" + server["sms_password"].toString();
-        arguments<<"--node-path=" + variable["path"].toString();
+            QJsonObject auth = task_data["auth"].toObject();
+            QJsonObject server = task_data["server"].toObject();
 
-        QPointer<Task> sms_task = new SmsTask{
-                python_engine_,
-                python_script_path,
-                arguments
-        };
+            QJsonObject variable = task_data["variables"].toArray()[0].toObject();
 
-        node->setTask(sms_task);
+            shared_ptr<SmsChecker> checker = make_shared<SmsVariableChecker>(
+                    variable["path"].toString(),
+                    variable["type"].toString(),
+                    variable["name"].toString(),
+                    variable["value"].toString()
+            );
+
+            QStringList arguments;
+            arguments<<task_category;
+            arguments<<"--host=" + auth["host"].toString();
+            arguments<<"--port=" + auth["port"].toString();
+            arguments<<"--user=" + auth["user"].toString();
+            arguments<<"--password=" + auth["password"].toString();
+            arguments<<"--sms-server=" + server["sms_server"].toString();
+            arguments<<"--sms-user=" + server["sms_user"].toString();
+            arguments<<"--sms-password=" + server["sms_password"].toString();
+            arguments<<"--node-path=" + variable["path"].toString();
+
+            QPointer<SmsTask> sms_task = new SmsTask{
+                    python_engine_,
+                    python_script_path,
+                    arguments
+            };
+            sms_task->addChecker(checker);
+
+            node->setTask(static_cast<QPointer<Task>>(sms_task));
+        }
+        else
+        {
+            qCritical()<<"[MainWindow::initNodeList] task category is not supported:"<<task_category;
+            continue;
+        }
+
         node_list_.push_back(node);
     }
 

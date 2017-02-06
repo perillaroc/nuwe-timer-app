@@ -1,4 +1,5 @@
 #include "sms_task.h"
+#include "sms_checker.h"
 
 #include <python_env/python_command.h>
 #include <python_env/python_engine.h>
@@ -24,6 +25,11 @@ SmsTask::SmsTask(QSharedPointer<PythonEnv::PythonEngine> python_engine, const QS
 SmsTask::~SmsTask()
 {
     //    qDebug()<<"CheckTask delete";
+}
+
+void SmsTask::addChecker(std::shared_ptr<SmsChecker> checker)
+{
+    checker_list_.push_back(checker);
 }
 
 void SmsTask::run()

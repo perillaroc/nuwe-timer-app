@@ -1,10 +1,14 @@
 #pragma once
 
-#include <QSharedPointer>
 #include "core_global.h"
 #include "task.h"
 
 #include <progress_util/shell_command.h>
+
+#include <QSharedPointer>
+
+#include <vector>
+#include <memory>
 
 namespace PythonEnv{
 class PythonEngine;
@@ -13,6 +17,8 @@ class PythonEngine;
 namespace NuweTimer{
 
 namespace Core{
+
+class SmsChecker;
 
 class CORESHARED_EXPORT SmsTask : public Task
 {
@@ -26,6 +32,8 @@ public:
             );
     ~SmsTask();
 
+    void addChecker(std::shared_ptr<SmsChecker> checker);
+
     void run() override;
 
 private slots:
@@ -36,6 +44,8 @@ private:
 
     QString python_script_path_;
     QStringList arguments_;
+
+    std::vector<std::shared_ptr<SmsChecker>> checker_list_;
 
 };
 

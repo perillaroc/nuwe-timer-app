@@ -29,7 +29,8 @@ SOURCES += \
     task.cpp \
     node_state.cpp \
     sms_task.cpp \
-    time_trigger.cpp
+    time_trigger.cpp \
+    sms_checker.cpp
 
 HEADERS +=\
         core_global.h \
@@ -38,7 +39,8 @@ HEADERS +=\
     task.h \
     node_state.h \
     sms_task.h \
-    time_trigger.h
+    time_trigger.h \
+    sms_checker.h
 
 win32{
     DESTDIR = $$build_base_dir/lib
