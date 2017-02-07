@@ -27,7 +27,7 @@
             "variables": [
               {
                 "path": "/grapes_meso_v4_1",
-                "name": "SMSDATA",
+                "name": "SMSDATE",
                 "type": "date",
                 "value": "current"
               }
@@ -61,7 +61,7 @@
             "variables": [
               {
                 "path": "/gmf_grapes_gfs_v2_0",
-                "name": "SMSDATA",
+                "name": "SMSDATE",
                 "type": "date",
                 "value": "current"
               }
@@ -95,7 +95,7 @@
             "variables": [
               {
                 "path": "error_path",
-                "name": "SMSDATA",
+                "name": "SMSDATE",
                 "type": "date",
                 "value": "current"
               }

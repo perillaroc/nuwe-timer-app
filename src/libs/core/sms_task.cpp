@@ -7,14 +7,16 @@
 #include <QApplication>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QJsonArray>
 #include <QtDebug>
 
 using namespace PythonEnv;
 using namespace ProgressUtil;
 using namespace NuweTimer::Core;
 
-SmsTask::SmsTask(QSharedPointer<PythonEnv::PythonEngine> python_engine, const QString &python_script_path, const QStringList &arguments, QObject *parent):
+SmsTask::SmsTask(QSharedPointer<PythonEnv::PythonEngine> python_engine,
+                 const QString &python_script_path,
+                 const QStringList &arguments,
+                 QObject *parent):
     Task{parent},
     python_engine_{python_engine},
     python_script_path_{python_script_path},
@@ -27,7 +29,7 @@ SmsTask::~SmsTask()
     //    qDebug()<<"CheckTask delete";
 }
 
-void SmsTask::addChecker(std::shared_ptr<SmsChecker> checker)
+void SmsTask::addVariableChecker(std::shared_ptr<SmsVariableChecker> checker)
 {
     checker_list_.push_back(checker);
 }
@@ -82,6 +84,52 @@ void SmsTask::slotCommandFinished(const ShellCommandResponse &shell_command_resp
     QJsonArray variable_list = node["variable_list"].toArray();
     QJsonArray generated_variable_list = node["generated_variable_list"].toArray();
 
+    for(auto &checker: checker_list_)
+    {
+        QString value;
+        int index = findVariableInList(variable_list, checker->name());
+        if(index != -1)
+        {
+            value = variable_list[index].toObject()["value"].toString();
+        }
+        else
+        {
+            index = findVariableInList(generated_variable_list, checker->name());
+            if(index != -1)
+            {
+               value = generated_variable_list[index].toObject()["value"].toString();
+            }
+            else
+            {
+                qWarning()<<"[SmsTask::slotCommandFinished] variable not found.";
+                abort();
+                return;
+            }
+        }
+
+        if(!checker->isFit(value))
+        {
+            abort();
+            qWarning()<<"[SmsTask::slotCommandFinished] variable is not fit. Current:"<<value<<"Expect:"<<checker->value();
+            return;
+        }
+    }
 
     complete();
+}
+
+int SmsTask::findVariableInList(const QJsonArray &array, const QString &name) const
+{
+    int index = -1;
+    for(int i=0;i<array.size();i++)
+    {
+        QJsonObject var = array[i].toObject();
+        QString current_name = var["name"].toString();
+        if(var["name"].toString() == name)
+        {
+            index = i;
+            break;
+        }
+    }
+    return index;
 }

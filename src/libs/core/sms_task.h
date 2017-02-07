@@ -6,6 +6,7 @@
 #include <progress_util/shell_command.h>
 
 #include <QSharedPointer>
+#include <QJsonArray>
 
 #include <vector>
 #include <memory>
@@ -18,7 +19,7 @@ namespace NuweTimer{
 
 namespace Core{
 
-class SmsChecker;
+class SmsVariableChecker;
 
 class CORESHARED_EXPORT SmsTask : public Task
 {
@@ -32,7 +33,7 @@ public:
             );
     ~SmsTask();
 
-    void addChecker(std::shared_ptr<SmsChecker> checker);
+    void addVariableChecker(std::shared_ptr<SmsVariableChecker> checker);
 
     void run() override;
 
@@ -40,12 +41,14 @@ private slots:
     void slotCommandFinished(const ProgressUtil::ShellCommandResponse &shell_command_response);
 
 private:
+    int findVariableInList(const QJsonArray &array, const QString &name) const;
+
     QSharedPointer<PythonEnv::PythonEngine> python_engine_;
 
     QString python_script_path_;
     QStringList arguments_;
 
-    std::vector<std::shared_ptr<SmsChecker>> checker_list_;
+    std::vector<std::shared_ptr<SmsVariableChecker>> checker_list_;
 
 };
 

@@ -7,22 +7,18 @@ namespace NuweTimer{
 
 namespace Core{
 
-class CORESHARED_EXPORT SmsChecker
-{
-public:
-    SmsChecker();
-    virtual ~SmsChecker();
-
-    virtual bool isFit(const QString &test_value);
-};
-
-class CORESHARED_EXPORT SmsVariableChecker: public SmsChecker
+class CORESHARED_EXPORT SmsVariableChecker
 {
 public:
     SmsVariableChecker(const QString &path, const QString &type, const QString &name, const QString &value);
     ~SmsVariableChecker();
 
-    bool isFit(const QString &test_value) override;
+    QString path() const { return path_; }
+    QString type() const { return type_; }
+    QString name() const { return name_; }
+    QString value() const { return value_; }
+
+    bool isFit(const QString &test_value);
 
 protected:
     // same as TimeTrigger class in time_trigger.

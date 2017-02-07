@@ -5,26 +5,10 @@
 
 using namespace NuweTimer::Core;
 
-SmsChecker::SmsChecker()
-{
-
-}
-
-SmsChecker::~SmsChecker()
-{
-
-}
-
-bool SmsChecker::isFit(const QString &test_value)
-{
-    Q_UNUSED(test_value);
-    return false;
-}
 
 SmsVariableChecker::SmsVariableChecker(
         const QString &path, const QString &type,
         const QString &name, const QString &value ):
-    SmsChecker{},
     path_{path},
     type_{type},
     name_{name},

@@ -188,7 +188,7 @@ void MainWindow::initNodeList()
 
             QJsonObject variable = task_data["variables"].toArray()[0].toObject();
 
-            shared_ptr<SmsChecker> checker = make_shared<SmsVariableChecker>(
+            shared_ptr<SmsVariableChecker> checker = make_shared<SmsVariableChecker>(
                     variable["path"].toString(),
                     variable["type"].toString(),
                     variable["name"].toString(),
@@ -211,7 +211,7 @@ void MainWindow::initNodeList()
                     python_script_path,
                     arguments
             };
-            sms_task->addChecker(checker);
+            sms_task->addVariableChecker(checker);
 
             node->setTask(static_cast<QPointer<Task>>(sms_task));
         }
