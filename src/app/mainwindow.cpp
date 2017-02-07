@@ -165,7 +165,8 @@ void MainWindow::initNodeList()
         QString trigger_type = trigger["type"].toString();
         if(trigger_type == "time")
         {
-            unique_ptr<Trigger> trigger{new TimeTrigger{QTime(0,0,0)}};
+            QString trigger_time = trigger["time"].toString();
+            unique_ptr<Trigger> trigger{new TimeTrigger{QTime::fromString(trigger_time, "hh:mm:ss")}};
             node->setTrigger(trigger);
         }
 
