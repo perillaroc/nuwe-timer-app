@@ -17,6 +17,7 @@
 #include <QJsonObject>
 #include <QFile>
 #include <QByteArray>
+#include <QCloseEvent>
 #include <QtDebug>
 
 using namespace std;
@@ -35,6 +36,9 @@ MainWindow::MainWindow(QWidget *parent) :
     node_tree_model_{new QStandardItemModel{this}}
 {
     ui->setupUi(this);
+    createActions();
+    createTrayIcon();
+    tray_icon_->show();
 
     python_engine_->setPythonDistributionDir("D:/windroc/project/2017/timer/playground/python/python36-x64");
     python_engine_->setPythonExecutableProgramPath("D:/windroc/project/2017/timer/playground/python/python36-x64/python.exe");
@@ -69,6 +73,15 @@ void MainWindow::startTimer()
 void MainWindow::stopTimer()
 {
     timer_->stop();
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    if(tray_icon_->isVisible())
+    {
+        hide();
+        event->ignore();
+    }
 }
 
 void MainWindow::slotSwitchTimer(bool checked)
@@ -135,6 +148,25 @@ void MainWindow::on_requeue_button_clicked()
     {
         node->requeue();
     }
+}
+
+void MainWindow::createActions()
+{
+    restore_action_ = new QAction{tr("Restore"), this};
+    connect(restore_action_, &QAction::triggered, this, &QWidget::showNormal);
+    quit_action_ = new QAction{tr("Quit"), this};
+    connect(quit_action_, &QAction::triggered, qApp, &QCoreApplication::quit);
+}
+
+void MainWindow::createTrayIcon()
+{
+    tray_icon_menu_ = new QMenu{this};
+    tray_icon_menu_->addAction(restore_action_);
+    tray_icon_menu_->addAction(quit_action_);
+
+    tray_icon_ = new QSystemTrayIcon{this};
+    tray_icon_->setIcon(this->windowIcon());
+    tray_icon_->setContextMenu(tray_icon_menu_);
 }
 
 void MainWindow::initNodeList()

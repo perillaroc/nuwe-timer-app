@@ -2,6 +2,7 @@
 #include <QMainWindow>
 #include <QPointer>
 #include <QSharedPointer>
+#include <QSystemTrayIcon>
 
 #include <vector>
 #include <memory>
@@ -38,6 +39,9 @@ public:
     void startTimer();
     void stopTimer();
 
+protected:
+    void closeEvent(QCloseEvent *event) Q_DECL_OVERRIDE;
+
 private slots:
     void slotSwitchTimer(bool checked);
 
@@ -46,10 +50,17 @@ private slots:
     void on_requeue_button_clicked();
 
 private:
+    void createActions();
+    void createTrayIcon();
     void initNodeList();
     void checkTaskList();
 
     Ui::MainWindow *ui;
+
+    QPointer<QMenu> tray_icon_menu_;
+    QPointer<QAction> quit_action_;
+    QPointer<QAction> restore_action_;
+    QPointer<QSystemTrayIcon> tray_icon_;
 
     QPointer<QTimer> timer_;
     float timer_interval_msec_;
