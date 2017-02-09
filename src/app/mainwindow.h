@@ -47,6 +47,8 @@ private slots:
 
     void slotUpdateNodeTreeView(bool checked=false);
 
+    void slotSystemTrayIconActivated(QSystemTrayIcon::ActivationReason reason);
+
     void on_requeue_button_clicked();
 
 private:

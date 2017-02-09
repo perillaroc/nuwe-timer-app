@@ -39,6 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :
     createActions();
     createTrayIcon();
     tray_icon_->show();
+    connect(tray_icon_, &QSystemTrayIcon::activated, this, &MainWindow::slotSystemTrayIconActivated);
 
     python_engine_->setPythonDistributionDir("D:/windroc/project/2017/timer/playground/python/python36-x64");
     python_engine_->setPythonExecutableProgramPath("D:/windroc/project/2017/timer/playground/python/python36-x64/python.exe");
@@ -140,6 +141,19 @@ void MainWindow::slotUpdateNodeTreeView(bool checked)
 
     }
     qDebug()<<"[MainWindow::slotUpdateNodeTreeView] update tree done.";
+}
+
+void MainWindow::slotSystemTrayIconActivated(QSystemTrayIcon::ActivationReason reason)
+{
+    switch(reason)
+    {
+    case QSystemTrayIcon::Trigger:
+    case QSystemTrayIcon::DoubleClick:
+        showNormal();
+        break;
+    default:
+        break;
+    }
 }
 
 void MainWindow::on_requeue_button_clicked()
