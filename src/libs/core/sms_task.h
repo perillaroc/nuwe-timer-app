@@ -41,7 +41,8 @@ private slots:
     void slotCommandFinished(const ProgressUtil::ShellCommandResponse &shell_command_response);
 
 private:
-    int findVariableInList(const QJsonArray &array, const QString &name) const;
+    QString findVariable(const QString &name, const QJsonArray &var_array, const QJsonArray &genvar_array, bool &ok) const;
+    QString findVariableInArray(const QString &name, const QJsonArray &array, bool &ok) const;
 
     QSharedPointer<PythonEnv::PythonEngine> python_engine_;
 

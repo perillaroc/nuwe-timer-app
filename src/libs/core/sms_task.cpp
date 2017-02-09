@@ -86,25 +86,13 @@ void SmsTask::slotCommandFinished(const ShellCommandResponse &shell_command_resp
 
     for(auto &checker: checker_list_)
     {
-        QString value;
-        int index = findVariableInList(variable_list, checker->name());
-        if(index != -1)
+        bool found = false;
+        QString value = findVariable(checker->name(), variable_list, generated_variable_list, found);
+        if(!found)
         {
-            value = variable_list[index].toObject()["value"].toString();
-        }
-        else
-        {
-            index = findVariableInList(generated_variable_list, checker->name());
-            if(index != -1)
-            {
-               value = generated_variable_list[index].toObject()["value"].toString();
-            }
-            else
-            {
-                qWarning()<<"[SmsTask::slotCommandFinished] variable not found.";
-                abort();
-                return;
-            }
+            qWarning()<<"[SmsTask::slotCommandFinished] variable not found.";
+            abort();
+            return;
         }
 
         if(!checker->isFit(value))
@@ -118,18 +106,30 @@ void SmsTask::slotCommandFinished(const ShellCommandResponse &shell_command_resp
     complete();
 }
 
-int SmsTask::findVariableInList(const QJsonArray &array, const QString &name) const
+QString SmsTask::findVariable(const QString &name, const QJsonArray &var_array, const QJsonArray &genvar_array, bool &ok) const
 {
-    int index = -1;
+    QString value;
+    value = findVariableInArray(name, var_array, ok);
+    if(ok)
+    {
+        return value;
+    }
+    value = findVariableInArray(name, genvar_array, ok);
+    return value;
+}
+
+QString SmsTask::findVariableInArray(const QString &name, const QJsonArray &array, bool &ok) const
+{
+    ok = false;
     for(int i=0;i<array.size();i++)
     {
         QJsonObject var = array[i].toObject();
         QString current_name = var["name"].toString();
         if(var["name"].toString() == name)
         {
-            index = i;
-            break;
+            ok = true;
+            return var["value"].toString();
         }
     }
-    return index;
+    return QString();
 }
