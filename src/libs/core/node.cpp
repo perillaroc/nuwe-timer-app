@@ -96,7 +96,7 @@ bool Node::resolveDependencies()
         return trigger_->fit();
     }
 
-    return false;
+    return true;
 }
 
 

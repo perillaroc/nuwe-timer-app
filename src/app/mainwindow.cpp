@@ -122,7 +122,14 @@ void MainWindow::slotUpdateNodeTreeView(bool checked)
                 trigger_item->setText(QString::fromStdString(node->trigger()->toString()));
             }
             QStandardItem *state_item = root->child(i, 2);
-            state_item->setText(QString::fromStdString(NodeState::toString(node->state())));
+            QString previous_state = state_item->text();
+            QString current_state = QString::fromStdString(NodeState::toString(node->state()));
+
+            state_item->setText(current_state);
+            if(current_state == "aborted" && previous_state != current_state)
+            {
+                tray_icon_->showMessage("Error task found!", "Some error task is found. Please see the main window.", QSystemTrayIcon::Critical);
+            }
         }
         else
         {
