@@ -40,6 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
     createTrayIcon();
     tray_icon_->show();
     connect(tray_icon_, &QSystemTrayIcon::activated, this, &MainWindow::slotSystemTrayIconActivated);
+    connect(tray_icon_, &QSystemTrayIcon::messageClicked, this, &MainWindow::slotSystemTrayIconMessageClicked);
 
     python_engine_->setPythonDistributionDir("D:/windroc/project/2017/timer/playground/python/python36-x64");
     python_engine_->setPythonExecutableProgramPath("D:/windroc/project/2017/timer/playground/python/python36-x64/python.exe");
@@ -161,6 +162,11 @@ void MainWindow::slotSystemTrayIconActivated(QSystemTrayIcon::ActivationReason r
     default:
         break;
     }
+}
+
+void MainWindow::slotSystemTrayIconMessageClicked()
+{
+    showNormal();
 }
 
 void MainWindow::on_requeue_button_clicked()
