@@ -30,6 +30,7 @@ Q_DECLARE_METATYPE(std::shared_ptr<Node>)
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow{parent},
     ui{new Ui::MainWindow},
+    app_menu_{new QMenu{this}},
     timer_{new QTimer{this}},
     timer_interval_msec_{1000},
     python_engine_{QSharedPointer<PythonEnv::PythonEngine>{new PythonEnv::PythonEngine{this}}},
@@ -37,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     createActions();
+    createMenus();
     createTrayIcon();
     tray_icon_->show();
     connect(tray_icon_, &QSystemTrayIcon::activated, this, &MainWindow::slotSystemTrayIconActivated);
@@ -175,6 +177,12 @@ void MainWindow::on_requeue_button_clicked()
     {
         node->requeue();
     }
+}
+
+void MainWindow::createMenus()
+{
+    app_menu_->addActions(QList<QAction*>()<<quit_action_);
+    ui->app_menu_button->setMenu(app_menu_);
 }
 
 void MainWindow::createActions()

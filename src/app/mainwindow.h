@@ -53,6 +53,7 @@ private slots:
     void on_requeue_button_clicked();
 
 private:
+    void createMenus();
     void createActions();
     void createTrayIcon();
     void initNodeList();
@@ -64,6 +65,7 @@ private:
     QPointer<QAction> quit_action_;
     QPointer<QAction> restore_action_;
     QPointer<QSystemTrayIcon> tray_icon_;
+    QPointer<QMenu> app_menu_;
 
     QPointer<QTimer> timer_;
     float timer_interval_msec_;

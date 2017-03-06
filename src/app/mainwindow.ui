@@ -31,7 +31,7 @@
     <property name="bottomMargin">
      <number>6</number>
     </property>
-    <item row="0" column="0">
+    <item row="0" column="1">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QPushButton" name="timer_switch_pushbutton">
@@ -70,16 +70,23 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QPushButton" name="app_menu_button">
+        <property name="text">
+         <string>Menu..</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
-    <item row="1" column="0">
+    <item row="1" column="1">
      <widget class="QLabel" name="label">
       <property name="text">
        <string>Current Tasks</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="0">
+    <item row="2" column="1">
      <widget class="QTreeView" name="node_tree_view">
       <property name="editTriggers">
        <set>QAbstractItemView::NoEditTriggers</set>
