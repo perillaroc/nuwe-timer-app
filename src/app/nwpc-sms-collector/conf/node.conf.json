@@ -6,7 +6,7 @@
         "trigger": [
           {
             "type": "time",
-            "time": "11:35:00"
+            "time": "00:00:00"
           }
         ],
         "task": {
@@ -36,11 +36,11 @@
         }
       },
       {
-        "name": "gmf_grapes_gfs_v2_0",
+        "name": "gmf_grapes_gfs_v2_1_1",
         "trigger": [
           {
             "type": "time",
-            "time": "11:35:00"
+            "time": "00:00:00"
           }
         ],
         "task": {
@@ -60,7 +60,7 @@
             },
             "variables": [
               {
-                "path": "/gmf_grapes_gfs_v2_0",
+                "path": "/gmf_grapes_gfs_v2_1_1",
                 "name": "SMSDATE",
                 "type": "date",
                 "value": "current"
