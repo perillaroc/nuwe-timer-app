@@ -281,7 +281,8 @@ void MainWindow::initNodeList()
             };
             sms_task->addVariableChecker(checker);
 
-            node->setTask(static_cast<QPointer<Task>>(sms_task));
+            QPointer<Task> sms_task_converted = static_cast<QPointer<Task>>(sms_task);
+            node->setTask(sms_task_converted);
         }
         else
         {

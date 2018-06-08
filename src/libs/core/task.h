@@ -17,7 +17,7 @@ public:
     Task(QObject *parent = nullptr);
     virtual ~Task();
 
-    void setNode(std::shared_ptr<Node> &node);
+    void setNode(const std::shared_ptr<Node> &node);
 
     virtual void run();
 

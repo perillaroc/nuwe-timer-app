@@ -13,7 +13,7 @@ Task::~Task()
 
 }
 
-void Task::setNode(std::shared_ptr<Node> &node)
+void Task::setNode(const std::shared_ptr<Node> &node)
 {
     node_ = node;
 }

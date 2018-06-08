@@ -121,7 +121,7 @@ public:
     void run() override
     {
         constexpr auto Size = std::tuple_size< Data >::value;
-        runInner(std::make_index_sequence<Size>::type());
+        runInner(std::make_index_sequence<Size>());
     }
 
     QFuture<void> future()
