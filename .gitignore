@@ -80,3 +80,6 @@ node_modules
 
 CMakeLists.txt.user
 CMakeLists.txt.user.*
+.vs
+
+CMakeSettings.json
