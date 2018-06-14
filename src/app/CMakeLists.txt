@@ -45,3 +45,11 @@ set_target_properties(
         RUNTIME_OUTPUT_NAME "nuwe-timer-app"
         RUNTIME_OUTPUT_DIRECTORY  ${build_bin_dir}
 )
+
+add_custom_command(
+    TARGET app_exe
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    "${CMAKE_CURRENT_SOURCE_DIR}/nwpc-sms-collector"
+    "${build_bin_dir}/nwpc-sms-collector"
+)
