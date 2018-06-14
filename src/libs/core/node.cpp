@@ -87,6 +87,10 @@ bool Node::resolveDependencies()
     {
         return false;
     }
+    if(state() == NodeState::State::Submitted)
+    {
+        return false;
+    }
     if(state() == NodeState::State::Unknown)
     {
         return false;

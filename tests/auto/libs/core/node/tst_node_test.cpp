@@ -71,12 +71,12 @@ void NodeTest::testStateDependencies_data()
     QTest::addColumn<NodeState::State>("state");
     QTest::addColumn<bool>("is_fit");
 
-    QTest::newRow("unknown") << NodeState::State::Unknown << false;
-    QTest::newRow("unknown") << NodeState::State::Queued << true;
-    QTest::newRow("unknown") << NodeState::State::Submitted << false;
-    QTest::newRow("unknown") << NodeState::State::Active << false;
-    QTest::newRow("unknown") << NodeState::State::Aborted << false;
-    QTest::newRow("unknown") << NodeState::State::Completed << false;
+    QTest::newRow("Unknown") << NodeState::State::Unknown << false;
+    QTest::newRow("Queued") << NodeState::State::Queued << true;
+    QTest::newRow("Submitted") << NodeState::State::Submitted << false;
+    QTest::newRow("Active") << NodeState::State::Active << false;
+    QTest::newRow("Aborted") << NodeState::State::Aborted << false;
+    QTest::newRow("Completed") << NodeState::State::Completed << false;
 }
 
 void NodeTest::testStateDependencies()
