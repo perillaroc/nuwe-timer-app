@@ -21,6 +21,9 @@ set(src_source_dir ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
+# options
+option(BUILD_TESTING "Build tests." OFF)
+
 # find python
 include(nuwe_find_python3)
 nuwe_find_python3()
@@ -30,4 +33,8 @@ nuwe_check_python3_library()
 configure_file(nuwe_timer_configure.h.in nuwe_timer_configure.h)
 
 add_subdirectory(src)
-add_subdirectory(tests)
+
+if(BUILD_TESTING)
+    enable_testing()
+    add_subdirectory(tests)
+endif()

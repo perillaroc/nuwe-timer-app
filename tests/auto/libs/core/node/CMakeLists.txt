@@ -28,3 +28,6 @@ set_target_properties(test_core_node
     PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${build_bin_dir}
 )
+
+add_test(NAME test_core_node
+    COMMAND $<TARGET_FILE:test_core_node>)

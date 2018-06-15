@@ -32,3 +32,6 @@ set_target_properties(test_core_trigger
     PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${build_bin_dir}
 )
+
+add_test(NAME test_core_trigger
+    COMMAND $<TARGET_FILE:test_core_trigger>)
