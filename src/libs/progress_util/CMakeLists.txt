@@ -23,7 +23,7 @@ set(progress_util_src_files
     async_job.cpp
 )
 
-add_library(progress_util_lib SHARED
+add_library(progress_util_lib STATIC
     ${progress_util_header_files}
     ${progress_util_src_files}
 )

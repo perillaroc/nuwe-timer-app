@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.10.0)
 
 project(nuwe-timer-app)
+set(CMAKE_CXX_STANDARD 11)
 
 add_definitions(-DQT_DEPRECATED_WARNINGS)
 #add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x060000)

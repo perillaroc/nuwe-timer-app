@@ -18,7 +18,7 @@ set(python_env_header_files
     python_env_global.h
 )
 
-add_library(python_env_lib SHARED
+add_library(python_env_lib STATIC
     ${python_env_header_files}
     ${python_env_source_files}
 )
