@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "nuwe_timer_configure.h"
+
 #include <core/node.h>
 #include <core/sms_task.h>
 #include <core/sms_checker.h>
@@ -44,8 +46,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(tray_icon_, &QSystemTrayIcon::activated, this, &MainWindow::slotSystemTrayIconActivated);
     connect(tray_icon_, &QSystemTrayIcon::messageClicked, this, &MainWindow::slotSystemTrayIconMessageClicked);
 
-    python_engine_->setPythonDistributionDir("D:/windroc/project/2017/timer/playground/python/python-3.6.1-embed-amd64");
-    python_engine_->setPythonExecutableProgramPath("D:/windroc/project/2017/timer/playground/python/python-3.6.1-embed-amd64/python.exe");
+    python_engine_->setPythonDistributionDir(Python3_ROOT_DIR);
+    python_engine_->setPythonExecutableProgramPath(Python3_EXECUTABLE);
 
     node_tree_model_->setHorizontalHeaderLabels(QStringList()<<"name"<<"trigger");
     ui->node_tree_view->setModel(node_tree_model_);

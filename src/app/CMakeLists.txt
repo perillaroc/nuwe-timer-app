@@ -28,6 +28,7 @@ add_executable(app_exe
 target_include_directories(
     app_exe PRIVATE
     ${src_source_dir}/libs
+    ${build_base_dir}
 )
 
 target_link_libraries(app_exe

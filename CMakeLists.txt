@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.10.0)
 
 project(nuwe-timer-app)
+
 set(CMAKE_CXX_STANDARD 11)
 
 add_definitions(-DQT_DEPRECATED_WARNINGS)
@@ -16,10 +17,17 @@ set(build_bin_dir ${build_base_dir}/bin)
 set(build_lib_dir ${build_base_dir}/lib)
 set(build_plugins_dir ${build_base_dir}/plugins)
 set(build_vendor_dir ${build_base_dir}/vendor)
-
 set(src_source_dir ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-set(python_env_dir ${CMAKE_CURRENT_SOURCE_DIR}/../playground/python/python36-x64)
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
+
+# find python
+include(nuwe_find_python3)
+nuwe_find_python3()
+nuwe_check_python3_library()
+
+# configure file
+configure_file(nuwe_timer_configure.h.in nuwe_timer_configure.h)
 
 add_subdirectory(src)
 add_subdirectory(tests)
