@@ -17,6 +17,7 @@ set(build_bin_dir ${build_base_dir}/bin)
 set(build_lib_dir ${build_base_dir}/lib)
 set(build_plugins_dir ${build_base_dir}/plugins)
 set(build_vendor_dir ${build_base_dir}/vendor)
+
 set(src_source_dir ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})

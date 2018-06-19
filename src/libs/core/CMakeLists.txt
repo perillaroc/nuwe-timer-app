@@ -11,9 +11,7 @@ set(core_lib_source_files
     trigger.cpp
     task.cpp
     node_state.cpp
-    sms_task.cpp
     time_trigger.cpp
-    sms_checker.cpp
 )
 
 set(core_lib_header_files
@@ -22,9 +20,7 @@ set(core_lib_header_files
     trigger.h
     task.h
     node_state.h
-    sms_task.h
     time_trigger.h
-    sms_checker.h
 )
 
 add_library(core_lib SHARED
@@ -35,6 +31,7 @@ add_library(core_lib SHARED
 target_include_directories(
     core_lib PUBLIC
     ${source_lib_dir}
+    ${src_source_dir}/packages
     )
 
 target_compile_definitions(

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "core_global.h"
-#include "task.h"
+#include "sms_task_global.h"
 
+#include <core/task.h>
 #include <progress_util/shell_command.h>
 
 #include <QSharedPointer>
@@ -21,7 +21,7 @@ namespace Core{
 
 class SmsVariableChecker;
 
-class CORESHARED_EXPORT SmsTask : public Task
+class SmsTask : public Task
 {
     Q_OBJECT
 public:

@@ -28,6 +28,7 @@ add_executable(app_exe
 target_include_directories(
     app_exe PRIVATE
     ${src_source_dir}/libs
+    ${src_source_dir}/packages
     ${build_base_dir}
 )
 
@@ -38,6 +39,7 @@ target_link_libraries(app_exe
     $<TARGET_LINKER_FILE:progress_util_lib>
     $<TARGET_LINKER_FILE:python_env_lib>
     $<TARGET_LINKER_FILE:core_lib>
+    $<TARGET_LINKER_FILE:sms_task_package>
     )
 
 set_target_properties(

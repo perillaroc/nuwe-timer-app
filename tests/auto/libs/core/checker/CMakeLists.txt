@@ -22,11 +22,14 @@ target_link_libraries(test_core_checker PRIVATE
     Qt5::Core
     Qt5::Widgets
     Qt5::Gui
-    ${core_test_libraries})
+    ${core_test_libraries}
+    $<TARGET_LINKER_FILE:sms_task_package>
+)
 
 target_include_directories(test_core_checker PUBLIC
     ${gtest_include_path}
-    ${core_test_include_paths})
+    ${core_test_include_paths}
+)
 
 set_target_properties(test_core_checker
     PROPERTIES

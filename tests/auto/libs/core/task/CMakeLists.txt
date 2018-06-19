@@ -19,7 +19,9 @@ target_link_libraries(test_core_task PRIVATE
     Qt5::Widgets
     Qt5::Gui
     Qt5::Test
-    ${core_test_libraries})
+    $<TARGET_LINKER_FILE:sms_task_package>
+    ${core_test_libraries}
+    )
 
 target_include_directories(test_core_task PUBLIC
     ${core_test_include_paths})

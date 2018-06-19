@@ -4,7 +4,7 @@
 #include <QThreadPool>
 
 #include <python_env/python_engine.h>
-#include <core/sms_task.h>
+#include <sms_task/sms_task.h>
 
 using namespace NuweTimer::Core;
 

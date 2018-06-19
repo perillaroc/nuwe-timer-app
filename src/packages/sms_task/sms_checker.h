@@ -1,5 +1,5 @@
 #pragma once
-#include "core_global.h"
+#include "sms_task_global.h"
 
 #include <QString>
 
@@ -7,7 +7,7 @@ namespace NuweTimer{
 
 namespace Core{
 
-class CORESHARED_EXPORT SmsVariableChecker
+class SmsVariableChecker
 {
 public:
     SmsVariableChecker(const QString &path, const QString &type, const QString &name, const QString &value);

@@ -4,9 +4,9 @@
 #include "nuwe_timer_configure.h"
 
 #include <core/node.h>
-#include <core/sms_task.h>
-#include <core/sms_checker.h>
 #include <core/time_trigger.h>
+#include <sms_task/sms_task.h>
+#include <sms_task/sms_checker.h>
 
 #include <python_env/python_engine.h>
 

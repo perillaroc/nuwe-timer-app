@@ -3,7 +3,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include <core/sms_checker.h>
+#include <sms_task/sms_checker.h>
 
 using namespace testing;
 using namespace NuweTimer::Core;

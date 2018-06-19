@@ -1,6 +1,6 @@
 set(core_test_include_paths
     ${src_source_dir}/libs
-    ${src_source_dir}/plugins
+    ${src_source_dir}/packages
     )
 
 set(core_test_libraries
