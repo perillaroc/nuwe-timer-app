@@ -31,7 +31,6 @@ add_library(core_lib SHARED
 target_include_directories(
     core_lib PUBLIC
     ${source_lib_dir}
-    ${src_source_dir}/packages
     )
 
 target_compile_definitions(
@@ -43,8 +42,6 @@ target_link_libraries(
     Qt5::Core
     Qt5::Widgets
     Qt5::Gui
-    $<TARGET_LINKER_FILE:progress_util_lib>
-    $<TARGET_LINKER_FILE:python_env_lib>
 )
 
 set_target_properties(
