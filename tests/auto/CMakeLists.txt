@@ -1,6 +1,6 @@
 set(test_auto_base_dir ${CMAKE_CURRENT_SOURCE_DIR})
 
-if(${GOOGLETEST_DIR})
+if(NOT GOOGLETEST_DIR)
     message(FATAL_ERROR "Please set GOOGLETEST_DIR to source directory of google test.")
 endif()
 
