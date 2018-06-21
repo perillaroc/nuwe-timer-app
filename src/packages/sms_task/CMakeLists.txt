@@ -9,17 +9,25 @@ find_package(Qt5 COMPONENTS
 set(sms_task_source_files
     sms_task.cpp
     sms_checker.cpp
+    create_sms_task_widget.cpp
 )
 
 set(sms_task_header_files
     sms_task_global.h
     sms_task.h
     sms_checker.h
+    create_sms_task_widget.h
 )
+
+set(sms_task_ui_files
+    add_trigger_widget.ui
+    add_variable_widget.ui
+    create_sms_task_widget.ui)
 
 add_library(sms_task_package STATIC
     ${sms_task_source_files}
     ${sms_task_header_files}
+    ${sms_task_ui_files}
 )
 
 target_include_directories(
