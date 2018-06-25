@@ -11,6 +11,7 @@
 
 using namespace PythonEnv;
 using namespace ProgressUtil;
+using namespace NuweTimer::SmsTaskPackage;
 using namespace NuweTimer::Core;
 
 SmsTask::SmsTask(QSharedPointer<PythonEnv::PythonEngine> python_engine,

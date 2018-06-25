@@ -3,7 +3,7 @@
 #include <QDate>
 #include <QtDebug>
 
-using namespace NuweTimer::Core;
+using namespace NuweTimer::SmsTaskPackage;
 
 
 SmsVariableChecker::SmsVariableChecker(

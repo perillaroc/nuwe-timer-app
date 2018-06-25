@@ -17,11 +17,11 @@ class PythonEngine;
 
 namespace NuweTimer{
 
-namespace Core{
+namespace SmsTaskPackage{
 
 class SmsVariableChecker;
 
-class SmsTask : public Task
+class SmsTask : public NuweTimer::Core::Task
 {
     Q_OBJECT
 public:

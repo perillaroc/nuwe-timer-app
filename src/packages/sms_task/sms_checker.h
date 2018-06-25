@@ -5,7 +5,7 @@
 
 namespace NuweTimer{
 
-namespace Core{
+namespace SmsTaskPackage{
 
 class SmsVariableChecker
 {

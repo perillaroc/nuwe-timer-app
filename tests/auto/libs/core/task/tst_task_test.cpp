@@ -6,7 +6,7 @@
 #include <python_env/python_engine.h>
 #include <sms_task/sms_task.h>
 
-using namespace NuweTimer::Core;
+using namespace NuweTimer::SmsTaskPackage;
 
 class TaskTest : public QObject
 {

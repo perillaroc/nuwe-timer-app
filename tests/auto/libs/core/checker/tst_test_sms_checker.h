@@ -6,7 +6,7 @@
 #include <sms_task/sms_checker.h>
 
 using namespace testing;
-using namespace NuweTimer::Core;
+using namespace NuweTimer::SmsTaskPackage;
 
 class MockSmsVariableChecker: public SmsVariableChecker
 {

@@ -1,5 +1,4 @@
-#ifndef CREATE_SMS_TASK_WIDGET_H
-#define CREATE_SMS_TASK_WIDGET_H
+#pragma once
 
 #include <QWidget>
 
@@ -18,5 +17,3 @@ public:
 private:
     Ui::CreateSmsTaskWidget *ui;
 };
-
-#endif // CREATE_SMS_TASK_WIDGET_H

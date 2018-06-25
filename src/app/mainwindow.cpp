@@ -24,6 +24,7 @@
 
 using namespace std;
 using namespace NuweTimer::Core;
+using namespace NuweTimer::SmsTaskPackage;
 using namespace NuweTimer::App;
 
 Q_DECLARE_SMART_POINTER_METATYPE(std::shared_ptr)
