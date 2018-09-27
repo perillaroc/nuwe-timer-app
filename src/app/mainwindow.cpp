@@ -12,7 +12,7 @@
 
 #include <QStandardItemModel>
 #include <QTimer>
-#include <QDatetime>
+#include <QDateTime>
 #include <QVariant>
 #include <QJsonDocument>
 #include <QJsonArray>
@@ -112,7 +112,7 @@ void MainWindow::slotUpdateNodeTreeView(bool checked)
 
     //root->removeRows(0, root->rowCount());
 
-    for(int i=0; i<node_list_.size(); i++)
+    for(auto i=0; i<node_list_.size(); i++)
     {
         auto node = node_list_[i];
         if(root->rowCount() > i)
@@ -242,7 +242,7 @@ void MainWindow::initNodeList()
 
         QJsonObject task = child["task"].toObject();
         QString task_type = task["type"].toString();
-        if(task_type!="SmsTask")
+        if(task_type!="sms_task")
         {
             qCritical()<<"[MainWindow::initNodeList] task type is not supported:"<< task_type;
             continue;

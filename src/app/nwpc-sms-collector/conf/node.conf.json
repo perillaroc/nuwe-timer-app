@@ -1,0 +1,38 @@
+{
+  "tree": {
+    "children": [
+      {
+        "name": "t639 date",
+        "trigger": {
+          "type": "time",
+          "time": "20:01:01"
+        },
+        "task": {
+          "type": "sms_task",
+          "category": "variable",
+          "data": {
+            "auth": {
+              "host": "host",
+              "port": "port",
+              "user": "user",
+              "password": "password"
+            },
+            "server": {
+              "sms_server": "nwpc_op",
+              "sms_user": "nwp",
+              "sms_password": "1"
+            },
+            "variables": [
+              {
+                "path": "/gmf_gsi_v1r5",
+                "type": "date",
+                "name": "SMSDATE",
+                "value": "current"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

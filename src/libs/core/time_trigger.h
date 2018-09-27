@@ -14,7 +14,7 @@ public:
     TimeTrigger(const QTime &time);
 
     std::string toString() const override;
-    bool fit();
+    bool fit() override;
 
 protected:
     // this is virtual function because of using Google C++ Mocking Framework.

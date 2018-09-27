@@ -33,8 +33,8 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    explicit MainWindow(QWidget *parent = nullptr);
+    ~MainWindow() override;
 
     void startTimer();
     void stopTimer();
@@ -68,7 +68,7 @@ private:
     QPointer<QMenu> app_menu_;
 
     QPointer<QTimer> timer_;
-    float timer_interval_msec_;
+    int timer_interval_msec_;
 
     QSharedPointer<PythonEnv::PythonEngine> python_engine_;
 
